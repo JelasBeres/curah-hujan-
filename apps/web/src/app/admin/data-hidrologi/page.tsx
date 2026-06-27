@@ -114,7 +114,7 @@ export default function DataHidrologiPage() {
     setEditingId(record.id);
     reset({
       timestamp: new Date(record.timestamp).toISOString().slice(0, 16),
-      tma: record.tma,
+      tma: record.tma * 100,
       rainfall_mm: record.rainfallMm ?? undefined,
     });
     setShowModal(true);
@@ -125,7 +125,7 @@ export default function DataHidrologiPage() {
     try {
       const payload = {
         timestamp: new Date(formData.timestamp).toISOString(),
-        tma: parseFloat(formData.tma),
+        tma: parseFloat(formData.tma) / 100,
         rainfall_mm: formData.rainfall_mm
           ? parseFloat(formData.rainfall_mm)
           : undefined,
