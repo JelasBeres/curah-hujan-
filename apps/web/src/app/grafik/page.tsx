@@ -85,7 +85,7 @@ export default function GrafikPage() {
     fetchData();
   }, [fetchData]);
 
-  const filterByDays = (data: ChartDataPoint[], days: number) => {
+  const filterByDays = <T extends { timestamp: string }>(data: T[], days: number): T[] => {
     const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
     return data.filter((d) => new Date(d.timestamp) >= cutoff);
   };
@@ -93,14 +93,7 @@ export default function GrafikPage() {
   const filteredTmaData = rawData ? filterByDays(rawData.chartData, period) : [];
   const filteredRainfallData = filteredTmaData;
   const filteredPredictionData = rawData
-    ? filterByDays(
-        rawData.predictionChartData.map((p) => ({
-          ...p,
-          tma: 0,
-          rainfall: 0,
-        })),
-        period
-      )
+    ? filterByDays(rawData.predictionChartData, period)
     : [];
 
   const tmaChartData = filteredTmaData.map((d) => ({

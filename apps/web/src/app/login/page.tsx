@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@/lib/validations";
 import { Droplets, Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/admin";
@@ -140,5 +140,22 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center px-4">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-900 mx-auto mb-4" />
+            <p className="text-gray-500">Memuat...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

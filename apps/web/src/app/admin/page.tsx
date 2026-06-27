@@ -125,7 +125,7 @@ export default function AdminDashboard() {
     fetchData();
   }, [fetchData]);
 
-  const filterByDays = (arr: { timestamp: string }[], days: number) => {
+  const filterByDays = <T extends { timestamp: string }>(arr: T[], days: number): T[] => {
     const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
     return arr.filter((d) => new Date(d.timestamp) >= cutoff);
   };
