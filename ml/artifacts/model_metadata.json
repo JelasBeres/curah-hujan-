@@ -1,0 +1,154 @@
+{
+  "version": "rf-tma-2024-v1",
+  "algorithm": "RandomForestRegressor",
+  "parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 25,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 5,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 300,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 1,
+    "warm_start": false
+  },
+  "feature_list": [
+    "tma",
+    "rainfall_mm",
+    "discharge_m3s",
+    "hour",
+    "day_of_week",
+    "day_of_month",
+    "month",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos",
+    "month_sin",
+    "month_cos",
+    "tma_lag_1h",
+    "tma_lag_2h",
+    "tma_lag_3h",
+    "tma_lag_6h",
+    "tma_lag_12h",
+    "tma_lag_24h",
+    "tma_diff_1h",
+    "tma_diff_3h",
+    "tma_rolling_mean_3h",
+    "tma_rolling_mean_6h",
+    "tma_rolling_mean_12h",
+    "tma_rolling_std_6h",
+    "rainfall_lag_1d",
+    "rainfall_lag_2d",
+    "rainfall_rolling_sum_3d",
+    "rainfall_rolling_sum_7d",
+    "discharge_lag_1h",
+    "discharge_lag_3h",
+    "discharge_rolling_mean_6h"
+  ],
+  "target": "target_tma_next_1h",
+  "training_date": "2026-06-27 11:26:37",
+  "training_duration_seconds": 0.30626606941223145,
+  "training_date_range": [
+    "2024-01-08 20:00:00",
+    "2024-09-15 23:00:00"
+  ],
+  "validation_date_range": [
+    "2024-09-16 01:00:00",
+    "2024-11-08 01:00:00"
+  ],
+  "test_date_range": [
+    "2024-11-08 02:00:00",
+    "2024-12-31 22:00:00"
+  ],
+  "num_train_records": 5471,
+  "num_val_records": 1173,
+  "num_test_records": 1173,
+  "baseline_metrics": {
+    "training": {
+      "mae": 0.08593675744836411,
+      "rmse": 0.23883291752425098,
+      "r2": 0.7980436382111049
+    },
+    "validation": {
+      "mae": 0.08463768115942029,
+      "rmse": 0.24881886371308637,
+      "r2": 0.7168347302311909
+    },
+    "testing": {
+      "mae": 0.08666666666666667,
+      "rmse": 0.2375991738915144,
+      "r2": 0.7427074230666568
+    }
+  },
+  "metrics": {
+    "training": {
+      "mae": 0.049780415764810466,
+      "rmse": 0.12912777859359498,
+      "r2": 0.9409651410081634
+    },
+    "validation": {
+      "mae": 0.10048985367549865,
+      "rmse": 0.22509036960755657,
+      "r2": 0.7682673597782054
+    },
+    "testing": {
+      "mae": 0.09565875799397175,
+      "rmse": 0.21371755921544122,
+      "r2": 0.7918301566803541
+    }
+  },
+  "cv_scores": {
+    "folds": [
+      0.12353059973445274,
+      0.13454066451168686,
+      0.19631453691526682,
+      0.22989141497893098,
+      0.14487593421964534
+    ],
+    "mean_mae": 0.16583063007199655,
+    "std_mae": 0.040596813985604184
+  },
+  "feature_importance": {
+    "tma": 0.1716867916793361,
+    "discharge_m3s": 0.14965232724693414,
+    "tma_rolling_mean_3h": 0.1117068512659846,
+    "discharge_rolling_mean_6h": 0.06508549231344059,
+    "tma_lag_1h": 0.0640565019499216,
+    "tma_rolling_mean_6h": 0.06293685504129158,
+    "discharge_lag_1h": 0.05433939675136878,
+    "tma_diff_3h": 0.04290586779825394,
+    "tma_rolling_mean_12h": 0.04065479849918615,
+    "tma_lag_2h": 0.028205249713744874,
+    "tma_diff_1h": 0.02595297663873864,
+    "tma_lag_3h": 0.02120444996536095,
+    "discharge_lag_3h": 0.018386146864952536,
+    "tma_lag_6h": 0.016723439336769338,
+    "tma_rolling_std_6h": 0.015239458826432737,
+    "tma_lag_12h": 0.014407350436321797,
+    "hour": 0.012849505823894313,
+    "month": 0.011301281265952182,
+    "tma_lag_24h": 0.011077921555831942,
+    "hour_sin": 0.009949991084175559,
+    "rainfall_rolling_sum_3d": 0.008510537270491916,
+    "month_sin": 0.007700708944971846,
+    "hour_cos": 0.006627806648813891,
+    "rainfall_rolling_sum_7d": 0.006517511027916736,
+    "rainfall_mm": 0.005464985248233361,
+    "rainfall_lag_1d": 0.004503491802831706,
+    "day_of_month": 0.0041317358251947225,
+    "rainfall_lag_2d": 0.003192399903125387,
+    "day_of_week": 0.002629708695075616,
+    "month_cos": 0.0018555443020207632,
+    "is_weekend": 0.000542916273431639
+  },
+  "rating_curve": "Q = 20.268 \u00d7 (H + 0.15)^2.157"
+}

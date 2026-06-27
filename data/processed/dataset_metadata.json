@@ -1,0 +1,98 @@
+{
+  "total_records": 7817,
+  "train_records": 5471,
+  "val_records": 1173,
+  "test_records": 1173,
+  "train_date_range": [
+    "2024-01-08 20:00:00",
+    "2024-09-15 23:00:00"
+  ],
+  "val_date_range": [
+    "2024-09-16 01:00:00",
+    "2024-11-08 01:00:00"
+  ],
+  "test_date_range": [
+    "2024-11-08 02:00:00",
+    "2024-12-31 22:00:00"
+  ],
+  "features": [
+    "tma",
+    "rainfall_mm",
+    "discharge_m3s",
+    "hour",
+    "day_of_week",
+    "day_of_month",
+    "month",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos",
+    "month_sin",
+    "month_cos",
+    "tma_lag_1h",
+    "tma_lag_2h",
+    "tma_lag_3h",
+    "tma_lag_6h",
+    "tma_lag_12h",
+    "tma_lag_24h",
+    "tma_diff_1h",
+    "tma_diff_3h",
+    "tma_rolling_mean_3h",
+    "tma_rolling_mean_6h",
+    "tma_rolling_mean_12h",
+    "tma_rolling_std_6h",
+    "rainfall_lag_1d",
+    "rainfall_lag_2d",
+    "rainfall_rolling_sum_3d",
+    "rainfall_rolling_sum_7d",
+    "discharge_lag_1h",
+    "discharge_lag_3h",
+    "discharge_rolling_mean_6h"
+  ],
+  "target": "target_tma_next_1h",
+  "missing_values_before_drop": {
+    "tma": 168,
+    "rainfall_mm": 168,
+    "discharge_m3s": 168,
+    "hour": 168,
+    "day_of_week": 168,
+    "day_of_month": 168,
+    "month": 168,
+    "is_weekend": 168,
+    "hour_sin": 168,
+    "hour_cos": 168,
+    "month_sin": 168,
+    "month_cos": 168,
+    "tma_lag_1h": 168,
+    "tma_lag_2h": 168,
+    "tma_lag_3h": 168,
+    "tma_lag_6h": 168,
+    "tma_lag_12h": 168,
+    "tma_lag_24h": 168,
+    "tma_diff_1h": 168,
+    "tma_diff_3h": 168,
+    "tma_rolling_mean_3h": 168,
+    "tma_rolling_mean_6h": 168,
+    "tma_rolling_mean_12h": 168,
+    "tma_rolling_std_6h": 168,
+    "rainfall_lag_1d": 168,
+    "rainfall_lag_2d": 168,
+    "rainfall_rolling_sum_3d": 168,
+    "rainfall_rolling_sum_7d": 168,
+    "discharge_lag_1h": 168,
+    "discharge_lag_3h": 168,
+    "discharge_rolling_mean_6h": 168,
+    "target_tma_next_1h": 168
+  },
+  "tma_range": [
+    0.18,
+    6.3
+  ],
+  "rainfall_range": [
+    0.0,
+    112.5
+  ],
+  "discharge_range": [
+    1.854579538564337,
+    1129.8770830928643
+  ]
+}
