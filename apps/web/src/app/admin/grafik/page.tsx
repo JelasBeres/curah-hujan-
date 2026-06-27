@@ -27,6 +27,7 @@ interface ChartDataPoint {
   timestamp: string;
   tma: number;
   rainfall: number;
+  discharge: number | null;
 }
 
 interface PredictionPoint {
@@ -44,7 +45,9 @@ function ChartTooltip({ active, payload, label }: any) {
           {entry.name}: {formatNumberIndonesian(entry.value, 2)}{" "}
           {entry.name === "Curah Hujan" || entry.name === "Rainfall"
             ? "mm"
-            : "m"}
+            : entry.name === "Debit"
+            ? "m³/s"
+            : "cm"}
         </p>
       ))}
     </div>
@@ -108,7 +111,7 @@ export default function AdminGrafikPage() {
       day: "numeric",
       month: "short",
     }),
-    tma: d.tma,
+    tma: d.tma * 100,
     rainfall: d.rainfall,
   }));
 
@@ -118,7 +121,7 @@ export default function AdminGrafikPage() {
         day: "numeric",
         month: "short",
       }),
-      p.predictedTma,
+      p.predictedTma * 100,
     ])
   );
   const combinedTmaData = tmaChartData.map((d) => ({
@@ -139,7 +142,7 @@ export default function AdminGrafikPage() {
       day: "numeric",
       month: "short",
     }),
-    debit: d.tma * 5.67,
+    debit: d.discharge,
   }));
 
   return (

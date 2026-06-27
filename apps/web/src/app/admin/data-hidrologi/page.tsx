@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Plus,
@@ -16,9 +16,10 @@ import {
   Database,
   X,
   Gauge,
+  Droplets,
 } from "lucide-react";
 import { hydrologyFormSchema } from "@/lib/validations";
-import { formatNumberIndonesian, formatDateIndonesian } from "@/lib/utils";
+import { formatNumberIndonesian, formatDateIndonesian, calculateDischarge } from "@/lib/utils";
 
 interface HydrologyRecord {
   id: string;
@@ -56,14 +57,14 @@ export default function DataHidrologiPage() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const form = useForm({
     resolver: zodResolver(hydrologyFormSchema),
   });
+  const { register, handleSubmit, reset, formState: { errors }, control } = form;
+  const watchedTma = useWatch({ control, name: "tma" });
+  const calculatedDebit = watchedTma != null && !isNaN(watchedTma)
+    ? calculateDischarge(Number(watchedTma))
+    : null;
 
   const showToast = (type: "success" | "error", message: string) => {
     setToast({ type, message });
@@ -269,7 +270,7 @@ export default function DataHidrologiPage() {
                     Waktu
                   </th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">
-                    TMA (m)
+                    TMA (cm)
                   </th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">
                     Curah Hujan (mm)
@@ -295,7 +296,7 @@ export default function DataHidrologiPage() {
                       {formatDateIndonesian(record.timestamp)}
                     </td>
                     <td className="px-4 py-3 font-medium">
-                      {formatNumberIndonesian(record.tma, 2)}
+                      {formatNumberIndonesian(record.tma * 100, 1)}
                     </td>
                     <td className="px-4 py-3">
                       {record.rainfallMm != null
@@ -401,7 +402,7 @@ export default function DataHidrologiPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  TMA (m)
+                  TMA (cm)
                 </label>
                 <input
                   type="number"
@@ -425,6 +426,20 @@ export default function DataHidrologiPage() {
                   {...register("rainfall_mm", { valueAsNumber: true })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Debit (m³/s) — otomatis
+                </label>
+                <div className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 text-gray-600 flex items-center gap-2">
+                  <Droplets className="w-4 h-4 text-blue-500" />
+                  {calculatedDebit != null
+                    ? `${formatNumberIndonesian(calculatedDebit, 2)} m³/s`
+                    : "Masukkan TMA untuk menghitung debit"}
+                </div>
+                <p className="text-xs text-gray-400 mt-1">
+                  Debit terhitung otomatis berdasarkan rating curve: Q = 20.268 × (H + 0.15)^2.157
+                </p>
               </div>
               <div className="flex justify-end gap-2 pt-2">
                 <button

@@ -43,6 +43,7 @@ export async function GET() {
         timestamp: hydrologyData.timestamp,
         tma: hydrologyData.tma,
         rainfallMm: hydrologyData.rainfallMm,
+        discharge: hydrologyData.calculatedDischargeM3s,
       })
       .from(hydrologyData)
       .where(gte(hydrologyData.timestamp, sevenDaysAgo))
@@ -95,6 +96,7 @@ export async function GET() {
         timestamp: d.timestamp.toISOString(),
         tma: d.tma,
         rainfall: d.rainfallMm,
+        discharge: d.discharge,
       })),
       predictionChartData: predictionChartData.map((d) => ({
         timestamp: d.timestamp.toISOString(),

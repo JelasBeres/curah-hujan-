@@ -152,7 +152,7 @@ export default function StatusPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <p className="text-sm text-gray-500 mb-1">TMA</p>
-                <p className="text-2xl font-bold">{formatNumberIndonesian(data.latestTma, 2)} m</p>
+                <p className="text-2xl font-bold">{formatNumberIndonesian(data.latestTma * 100, 1)} cm</p>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <p className="text-sm text-gray-500 mb-1">Curah Hujan</p>
@@ -166,7 +166,7 @@ export default function StatusPage() {
                 <p className="text-sm text-gray-500 mb-1">Prediksi TMA</p>
                 <p className="text-2xl font-bold">
                   {data.prediction
-                    ? `${formatNumberIndonesian(data.prediction.predictedTma, 2)} m`
+                    ? `${formatNumberIndonesian(data.prediction.predictedTma * 100, 1)} cm`
                     : "—"}
                 </p>
               </div>
@@ -182,7 +182,7 @@ export default function StatusPage() {
                   <div>
                     <p className="text-sm text-gray-500">TMA Diprediksi</p>
                     <p className="text-xl font-bold">
-                      {formatNumberIndonesian(data.prediction.predictedTma, 2)} m
+                      {formatNumberIndonesian(data.prediction.predictedTma * 100, 1)} cm
                     </p>
                   </div>
                   <div>

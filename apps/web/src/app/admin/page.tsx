@@ -13,6 +13,7 @@ import {
   RefreshCw,
   Brain,
   Info,
+  Activity,
 } from "lucide-react";
 import {
   LineChart,
@@ -51,7 +52,7 @@ interface DashboardData {
     content: string;
     status: string;
   } | null;
-  chartData: { timestamp: string; tma: number; rainfall: number }[];
+  chartData: { timestamp: string; tma: number; rainfall: number; discharge: number | null }[];
   predictionChartData: { timestamp: string; predictedTma: number }[];
   thresholds: { safeMax: number; alertMax: number; dangerMin: number };
 }
@@ -93,7 +94,7 @@ function ChartTooltip({ active, payload, label }: any) {
       {payload.map((entry: any) => (
         <p key={entry.name} style={{ color: entry.color }}>
           {entry.name}: {formatNumberIndonesian(entry.value, 2)}{" "}
-          {entry.name === "Curah Hujan" ? "mm" : "m"}
+          {entry.name === "Curah Hujan" ? "mm" : entry.name === "Debit" ? "m³/s" : "cm"}
         </p>
       ))}
     </div>
@@ -136,8 +137,9 @@ export default function AdminDashboard() {
       day: "numeric",
       month: "short",
     }),
-    tma: d.tma,
+    tma: d.tma * 100,
     rainfall: d.rainfall,
+    discharge: d.discharge,
   }));
 
   const filteredPredData = data
@@ -149,7 +151,7 @@ export default function AdminDashboard() {
         day: "numeric",
         month: "short",
       }),
-      p.predictedTma,
+      p.predictedTma * 100,
     ])
   );
   const combinedData = chartData.map((d) => ({
@@ -217,7 +219,7 @@ export default function AdminDashboard() {
                 <span className="text-sm">TMA Terakhir</span>
               </div>
               <p className="text-2xl font-bold">
-                {formatNumberIndonesian(data.latestTma, 2)} m
+                {formatNumberIndonesian(data.latestTma * 100, 1)} cm
               </p>
               {data.latestDataTimestamp && (
                 <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
@@ -274,7 +276,7 @@ export default function AdminDashboard() {
                 <div>
                   <span className="text-blue-600">TMA Diprediksi:</span>
                   <span className="font-semibold ml-1">
-                    {formatNumberIndonesian(data.prediction.predictedTma, 2)} m
+                    {formatNumberIndonesian(data.prediction.predictedTma * 100, 1)} cm
                   </span>
                 </div>
                 <div>
@@ -382,6 +384,35 @@ export default function AdminDashboard() {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+            <h3 className="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
+              <Activity className="w-4 h-4" />
+              Debit (m³/s)
+            </h3>
+            {chartData.some((d) => d.discharge != null) ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="waktu" tick={{ fontSize: 10 }} />
+                  <YAxis tick={{ fontSize: 10 }} />
+                  <Tooltip content={<ChartTooltip />} />
+                  <Line
+                    type="monotone"
+                    dataKey="discharge"
+                    stroke="#059669"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Debit"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-[300px] flex items-center justify-center text-gray-400 text-sm">
+                Belum ada data debit
+              </div>
+            )}
           </div>
 
           {data.publishedWarning && (

@@ -57,7 +57,7 @@ export default function ThresholdPage() {
         danger_min: json.dangerMin,
       };
       setCurrent(vals);
-      reset(vals);
+      reset({ safe_max: vals.safe_max * 100, alert_max: vals.alert_max * 100, danger_min: vals.danger_min * 100 });
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -84,7 +84,11 @@ export default function ThresholdPage() {
       const res = await fetch("/api/thresholds", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          safe_max: formData.safe_max / 100,
+          alert_max: formData.alert_max / 100,
+          danger_min: formData.danger_min / 100,
+        }),
       });
 
       if (!res.ok) {
@@ -155,7 +159,7 @@ export default function ThresholdPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Batas Aman (safe_max) - meter
+                  Batas Aman (safe_max) - cm
                 </label>
                 <input
                   type="number"
@@ -175,7 +179,7 @@ export default function ThresholdPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Batas Siaga (alert_max) - meter
+                  Batas Siaga (alert_max) - cm
                 </label>
                 <input
                   type="number"
@@ -195,7 +199,7 @@ export default function ThresholdPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Batas Bahaya (danger_min) - meter
+                  Batas Bahaya (danger_min) - cm
                 </label>
                 <input
                   type="number"
@@ -238,7 +242,7 @@ export default function ThresholdPage() {
                     <div className="flex-1">
                       <p className="text-sm font-medium">Aman</p>
                       <p className="text-xs text-gray-500">
-                        TMA &le; {formatNumberIndonesian(current.safe_max, 2)} m
+                        TMA &le; {formatNumberIndonesian(current.safe_max * 100, 1)} cm
                       </p>
                     </div>
                   </div>
@@ -247,8 +251,8 @@ export default function ThresholdPage() {
                     <div className="flex-1">
                       <p className="text-sm font-medium">Siaga</p>
                       <p className="text-xs text-gray-500">
-                        {formatNumberIndonesian(current.safe_max, 2)} m &lt; TMA &le;{" "}
-                        {formatNumberIndonesian(current.alert_max, 2)} m
+                        {formatNumberIndonesian(current.safe_max * 100, 1)} cm &lt; TMA &le;{" "}
+                        {formatNumberIndonesian(current.alert_max * 100, 1)} cm
                       </p>
                     </div>
                   </div>
@@ -257,7 +261,7 @@ export default function ThresholdPage() {
                     <div className="flex-1">
                       <p className="text-sm font-medium">Bahaya</p>
                       <p className="text-xs text-gray-500">
-                        TMA &ge; {formatNumberIndonesian(current.danger_min, 2)} m
+                        TMA &ge; {formatNumberIndonesian(current.danger_min * 100, 1)} cm
                       </p>
                     </div>
                   </div>

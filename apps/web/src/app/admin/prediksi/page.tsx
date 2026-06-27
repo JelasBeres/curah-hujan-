@@ -164,7 +164,7 @@ export default function PrediksiPage() {
               <div className="flex justify-between items-center py-2 border-b border-gray-50">
                 <span className="text-sm text-gray-600">TMA</span>
                 <span className="font-semibold">
-                  {formatNumberIndonesian(latestData.latestTma, 2)} m
+                  {formatNumberIndonesian(latestData.latestTma * 100, 1)} cm
                 </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-50">
@@ -242,7 +242,7 @@ export default function PrediksiPage() {
               <div className="flex justify-between items-center py-2 border-b border-gray-50">
                 <span className="text-sm text-gray-600">TMA Diprediksi</span>
                 <span className="font-semibold">
-                  {formatNumberIndonesian(result.predictedTma, 2)} m
+                  {formatNumberIndonesian(result.predictedTma * 100, 1)} cm
                 </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-50">
@@ -324,7 +324,7 @@ export default function PrediksiPage() {
                       {formatDateIndonesian(pred.predictionTimestamp)}
                     </td>
                     <td className="px-3 py-2 font-medium">
-                      {formatNumberIndonesian(pred.predictedTma, 2)} m
+                      {formatNumberIndonesian(pred.predictedTma * 100, 1)} cm
                     </td>
                     <td className="px-3 py-2 text-xs text-gray-500">
                       {formatNumberIndonesian(pred.calculatedDischargeM3s, 2)}{" "}

@@ -53,7 +53,7 @@ function CustomTooltip({ active, payload, label }: any) {
       {payload.map((entry: any) => (
         <p key={entry.name} style={{ color: entry.color }}>
           {entry.name}: {formatNumberIndonesian(entry.value, 2)}{" "}
-          {entry.name === "Curah Hujan" ? "mm" : "m"}
+          {entry.name === "Curah Hujan" ? "mm" : "cm"}
         </p>
       ))}
     </div>
@@ -98,6 +98,7 @@ export default function GrafikPage() {
 
   const tmaChartData = filteredTmaData.map((d) => ({
     ...d,
+    tma: d.tma * 100,
     waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
       day: "numeric",
       month: "short",
@@ -110,7 +111,7 @@ export default function GrafikPage() {
         day: "numeric",
         month: "short",
       }),
-      p.predictedTma,
+      p.predictedTma * 100,
     ])
   );
 
@@ -206,7 +207,7 @@ export default function GrafikPage() {
                     <YAxis
                       tick={{ fontSize: 11 }}
                       label={{
-                        value: "TMA (m)",
+                        value: "TMA (cm)",
                         angle: -90,
                         position: "insideLeft",
                         style: { fontSize: 12 },
@@ -283,7 +284,7 @@ export default function GrafikPage() {
             <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 text-sm text-gray-600">
               <p className="font-medium text-blue-800 mb-2">Keterangan:</p>
               <ul className="space-y-1 list-disc list-inside">
-                <li>TMA (Tinggi Muka Air) diukur dalam satuan meter (m)</li>
+                <li>TMA (Tinggi Muka Air) diukur dalam satuan centimeter (cm)</li>
                 <li>Curah hujan diukur dalam satuan milimeter (mm)</li>
                 <li>
                   Data prediksi merupakan hasil perhitungan model Random Forest
