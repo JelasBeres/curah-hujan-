@@ -7,6 +7,7 @@ import {
   BarChart3,
   Droplets,
   CloudRain,
+  Gauge,
   Loader2,
 } from "lucide-react";
 import {
@@ -27,6 +28,7 @@ interface ChartDataPoint {
   timestamp: string;
   tma: number;
   rainfall: number;
+  discharge: number | null;
 }
 
 interface PredictionPoint {
@@ -126,6 +128,14 @@ export default function GrafikPage() {
       month: "short",
     }),
     curahHujan: d.rainfall,
+  }));
+
+  const dischargeChartData = filteredRainfallData.map((d) => ({
+    waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+    }),
+    debit: d.discharge,
   }));
 
   return (
@@ -277,6 +287,48 @@ export default function GrafikPage() {
               ) : (
                 <div className="h-64 flex items-center justify-center text-gray-400">
                   <p>Belum ada data curah hujan untuk periode ini</p>
+                </div>
+              )}
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Gauge className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-lg font-semibold">Debit Air</h2>
+              </div>
+              {dischargeChartData.some((d) => d.debit != null) ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={dischargeChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis
+                      dataKey="waktu"
+                      tick={{ fontSize: 11 }}
+                      interval="preserveStartEnd"
+                    />
+                    <YAxis
+                      tick={{ fontSize: 11 }}
+                      label={{
+                        value: "Debit (m³/s)",
+                        angle: -90,
+                        position: "insideLeft",
+                        style: { fontSize: 12 },
+                      }}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="debit"
+                      stroke="#059669"
+                      strokeWidth={2}
+                      dot={false}
+                      name="Debit"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-64 flex items-center justify-center text-gray-400">
+                  <p>Belum ada data debit untuk periode ini</p>
                 </div>
               )}
             </div>
