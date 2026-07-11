@@ -98,21 +98,24 @@ export default function GrafikPage() {
     ? filterByDays(rawData.predictionChartData, period)
     : [];
 
+  const formatTime = (ts: string) => {
+    return new Date(ts).toLocaleString("id-ID", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).replace(/\./g, ":");
+  };
+
   const tmaChartData = filteredTmaData.map((d) => ({
     ...d,
     tma: d.tma * 100,
-    waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-    }),
+    waktu: formatTime(d.timestamp),
   }));
 
   const predictionMap = new Map(
     filteredPredictionData.map((p) => [
-      new Date(p.timestamp).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "short",
-      }),
+      formatTime(p.timestamp),
       p.predictedTma * 100,
     ])
   );
@@ -123,18 +126,12 @@ export default function GrafikPage() {
   }));
 
   const rainfallChartData = filteredRainfallData.map((d) => ({
-    waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-    }),
+    waktu: formatTime(d.timestamp),
     curahHujan: d.rainfall,
   }));
 
   const dischargeChartData = filteredRainfallData.map((d) => ({
-    waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-    }),
+    waktu: formatTime(d.timestamp),
     debit: d.discharge,
   }));
 

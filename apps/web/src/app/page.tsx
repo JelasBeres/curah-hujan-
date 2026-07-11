@@ -211,44 +211,50 @@ export default function HomePage() {
           {!loading && !error && data && (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 bg-blue-50 rounded-xl">
-                      <Waves className="w-5 h-5 text-blue-600" />
+                    <div className="p-3 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl shadow-inner">
+                      <Waves className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-500">Tinggi Muka Air</p>
+                      <p className="text-sm font-semibold text-gray-500 tracking-wide uppercase">Tinggi Muka Air</p>
                     </div>
                     {status && (
-                      <span className={`ml-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${status.iconBg} ${status.text}`}>
+                      <span className={`ml-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold shadow-sm ${status.iconBg} ${status.text} border ${status.border}`}>
                         <StatusIcon status={data.currentStatus} size="w-3.5 h-3.5" />
                         {status.label}
                       </span>
                     )}
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{formatNumberIndonesian(data.latestTma * 100, 1)} <span className="text-lg font-normal text-gray-500">cm</span></p>
+                  <p className="text-4xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+                    {formatNumberIndonesian(data.latestTma * 100, 1)} <span className="text-xl font-medium text-gray-400">cm</span>
+                  </p>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 bg-cyan-50 rounded-xl">
-                      <CloudRain className="w-5 h-5 text-cyan-600" />
+                    <div className="p-3 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-xl shadow-inner">
+                      <CloudRain className="w-6 h-6 text-cyan-600" />
                     </div>
-                    <p className="text-sm font-medium text-gray-500">Curah Hujan</p>
+                    <p className="text-sm font-semibold text-gray-500 tracking-wide uppercase">Curah Hujan</p>
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{formatNumberIndonesian(data.latestRainfall, 1)} <span className="text-lg font-normal text-gray-500">mm</span></p>
-                  <p className="text-xs text-gray-400 mt-2">Data curah hujan harian terakhir</p>
+                  <p className="text-4xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+                    {formatNumberIndonesian(data.latestRainfall, 1)} <span className="text-xl font-medium text-gray-400">mm</span>
+                  </p>
+                  <p className="text-xs text-gray-400 mt-3 font-medium">Data curah hujan harian terakhir</p>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 bg-emerald-50 rounded-xl">
-                      <Gauge className="w-5 h-5 text-emerald-600" />
+                    <div className="p-3 bg-gradient-to-br from-emerald-100 to-emerald-50 rounded-xl shadow-inner">
+                      <Gauge className="w-6 h-6 text-emerald-600" />
                     </div>
-                    <p className="text-sm font-medium text-gray-500">Debit Air</p>
+                    <p className="text-sm font-semibold text-gray-500 tracking-wide uppercase">Debit Air</p>
                   </div>
-                  <p className="text-3xl font-bold text-gray-900">{formatNumberIndonesian(data.latestDischarge, 2)} <span className="text-lg font-normal text-gray-500">m³/s</span></p>
-                  <p className="text-xs text-gray-400 mt-2">Debit terhitung otomatis berdasarkan rating curve</p>
+                  <p className="text-4xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+                    {formatNumberIndonesian(data.latestDischarge, 2)} <span className="text-xl font-medium text-gray-400">m³/s</span>
+                  </p>
+                  <p className="text-xs text-gray-400 mt-3 font-medium">Debit terhitung otomatis berdasarkan rating curve</p>
                 </div>
               </div>
 

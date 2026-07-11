@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # Environment variables needed for web
+      # e.g., DATABASE_URL, ML_SERVICE_URL, AUTH_SECRET
+      # Add them below or use env_file
+    env_file:
+      - ./apps/web/.env
+    restart: unless-stopped
+    depends_on:
+      - ml-service
+
+  ml-service:
+    build:
+      context: ./apps/ml-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - ./apps/ml-service/.env
+    restart: unless-stopped

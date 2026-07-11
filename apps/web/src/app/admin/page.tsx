@@ -131,12 +131,18 @@ export default function AdminDashboard() {
     return arr.filter((d) => new Date(d.timestamp) >= cutoff);
   };
 
-  const filteredChartData = data ? filterByDays(data.chartData, period) : [];
-  const chartData = filteredChartData.map((d) => ({
-    waktu: new Date(d.timestamp).toLocaleDateString("id-ID", {
+  const formatTime = (ts: string) => {
+    return new Date(ts).toLocaleString("id-ID", {
       day: "numeric",
       month: "short",
-    }),
+      hour: "2-digit",
+      minute: "2-digit",
+    }).replace(/\./g, ":");
+  };
+
+  const filteredChartData = data ? filterByDays(data.chartData, period) : [];
+  const chartData = filteredChartData.map((d) => ({
+    waktu: formatTime(d.timestamp),
     tma: d.tma * 100,
     rainfall: d.rainfall,
     discharge: d.discharge,
@@ -147,10 +153,7 @@ export default function AdminDashboard() {
     : [];
   const predictionMap = new Map(
     filteredPredData.map((p) => [
-      new Date(p.timestamp).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "short",
-      }),
+      formatTime(p.timestamp),
       p.predictedTma * 100,
     ])
   );
