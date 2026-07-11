@@ -67,7 +67,7 @@ export default function AdminGrafikPage() {
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [period, setPeriod] = useState(7);
+  const [period, setPeriod] = useState(30);
 
   const fetchData = useCallback(async () => {
     setLoading(true);

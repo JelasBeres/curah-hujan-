@@ -11,7 +11,7 @@ import { determineWarningStatus } from "@/lib/utils";
 
 export async function GET() {
   try {
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
     const [latestData] = await db
       .select()
@@ -46,7 +46,7 @@ export async function GET() {
         discharge: hydrologyData.calculatedDischargeM3s,
       })
       .from(hydrologyData)
-      .where(gte(hydrologyData.timestamp, sevenDaysAgo))
+      .where(gte(hydrologyData.timestamp, thirtyDaysAgo))
       .orderBy(hydrologyData.timestamp);
 
     const predictionChartData = await db
@@ -55,7 +55,7 @@ export async function GET() {
         predictedTma: predictions.predictedTma,
       })
       .from(predictions)
-      .where(gte(predictions.predictionTimestamp, sevenDaysAgo))
+      .where(gte(predictions.predictionTimestamp, thirtyDaysAgo))
       .orderBy(predictions.predictionTimestamp);
 
     const thresholds = activeThreshold
