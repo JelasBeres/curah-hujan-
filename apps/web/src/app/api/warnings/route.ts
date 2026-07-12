@@ -46,6 +46,8 @@ export async function POST(request: NextRequest) {
         title,
         content,
         status,
+        isPublished: true,
+        publishedAt: new Date(),
         createdBy: session.user.id,
       })
       .returning();
