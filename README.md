@@ -271,6 +271,29 @@ docker run -p 8000:8000 ml-service
 4. Push ke branch (`git push origin feature/amazing-feature`)
 5. Buka Pull Request
 
+## Panduan Handover Proyek (Serah Terima)
+
+Untuk melakukan handover (serah terima) proyek ini kepada pihak lain (misalnya klien atau institusi), berikut adalah langkah-langkah yang harus dilakukan:
+
+1. **Akses Repository**:
+   - Undang pihak penerima sebagai kolaborator di repository GitHub/GitLab ini, atau transfer *ownership* repository.
+
+2. **Kredensial Database (Neon Postgres)**:
+   - Berikan akses ke dashboard Neon (neon.tech) tempat database di-host, atau serahkan *Connection String* (DATABASE_URL) agar mereka bisa mengelola database sendiri.
+
+3. **Environment Variables (`.env`)**:
+   - Berikan salinan file `.env` yang digunakan di *production* kepada penerima. Pastikan mereka menyimpan `AUTH_SECRET`, `DATABASE_URL`, dan `ML_SERVICE_API_KEY` dengan aman.
+
+4. **Akses Hosting**:
+   - Jika *Web App* di-host di Vercel, transfer *project* di Vercel ke akun/tim penerima.
+   - Jika *ML Service* di-host di VPS/Cloud Run/Railway, serahkan kredensial login VPS (SSH key/password) atau akses akun cloud provider tersebut.
+
+5. **Dokumentasi**:
+   - Pastikan pihak penerima membaca file `README.md` ini dan juga dokumen `Dokumentasi_Alur_ML_dan_Web.docx` yang ada di root direktori untuk memahami alur kerja sistem.
+
+6. **Demonstrasi Menjalankan Sistem**:
+   - Tunjukkan cara menjalankan sistem di lokal sesuai dengan panduan **Instalasi & Menjalankan** di atas. Jika menggunakan VPS, tunjukkan cara menjalankan `docker-compose up -d` untuk ML Service.
+
 ## Lisensi
 
 Proyek ini dibuat untuk tujuan akademis — Tugas Akhir/Skripsi.
