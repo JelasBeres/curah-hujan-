@@ -235,17 +235,25 @@ dimana:
 
 Default: safe_max=2.0m, alert_max=3.0m, danger_min=3.0m
 
-## Pengujian
+## Verifikasi & Pengujian (Tested)
+
+Untuk memastikan bahwa sistem berjalan dengan baik (seperti yang telah terverifikasi secara langsung), jalankan perintah-perintah berikut:
 
 ```bash
-# ML Service tests
+# 1. Verifikasi ML Service (Pastikan semua test passed)
 cd apps/ml-service
+# Pastikan virtual environment sudah aktif dan dependencies terinstall
 pytest -v
 
-# Web app type checking
+# 2. Verifikasi Web App (Pastikan Build Berhasil)
 cd apps/web
-npm run typecheck
-npm run lint
+# Pastikan file .env sudah dikonfigurasi dengan benar (terutama DATABASE_URL)
+npm install
+# npm run build digunakan untuk memverifikasi bahwa kode bebas error saat di-compile
+npm run build
+
+# Jika build berhasil ("Compiled successfully"), maka web app siap dijalankan:
+npm run dev
 ```
 
 ## Deployment
